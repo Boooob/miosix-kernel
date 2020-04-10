@@ -1,15 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***************************************************************************
+ *   Copyright (C) 2020 by Emanuele Pisano                                 *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   As a special exception, if other files instantiate templates or use   *
+ *   macros or inline functions from this file, or you compile this file   *
+ *   and link it with other works to produce a work based on this file,    *
+ *   this file does not by itself cause the resulting work to be covered   *
+ *   by the GNU General Public License. However the source code for this   *
+ *   file must still be made available in accordance with the GNU General  *
+ *   Public License. This exception does not invalidate any other reasons  *
+ *   why a work based on this file might be covered by the GNU General     *
+ *   Public License.                                                       *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>   *
+ ***************************************************************************/
 
-/* 
- * File:   lcd2004_i2c.cpp
- * Author: bob
- * 
- * Created on 26 febbraio 2020, 22.29
- */
 
 #include "lcd2004_i2c.h"
 #include "stm32f2_f4_i2c.h"
@@ -77,15 +92,15 @@ namespace miosix{
     
     bool Lcd2004::clear()
     {
-        bool not_error = sendCommand(CMD_CLEAR);
+        bool success = sendCommand(CMD_CLEAR);
 	Thread::sleep(2);
-        return not_error;
+        return success;
     }
     
     bool Lcd2004::home(){
-        bool not_error = sendCommand(CMD_RETURNHOME);
+        bool success = sendCommand(CMD_RETURNHOME);
         Thread::sleep(2);
-        return not_error;
+        return success;
     }
     
     bool Lcd2004::setPosition(int column, int row){
@@ -105,24 +120,24 @@ namespace miosix{
     }
     
     bool Lcd2004::writeLine(const char* text, int row, int len){
-        bool not_error = true;
-        if((entry_mode & ENTRYMODE_LEFT) == 0x00) not_error = setPosition(columns, row);    //if the entry mode is set to right-to-left or adjusted right, the line is writed from the end
-        else if((entry_mode & ENTRYMODE_SHIFTINCREMENT) != 0x00) not_error = setPosition(columns+1, row);
-        else not_error = setPosition(1, row);                                          //else, the line is written from the start, as usual
+        bool success = true;
+        if((entry_mode & ENTRYMODE_LEFT) == 0x00) success = setPosition(columns, row);    //if the entry mode is set to right-to-left or adjusted right, the line is writed from the end
+        else if((entry_mode & ENTRYMODE_SHIFTINCREMENT) != 0x00) success = setPosition(columns+1, row);
+        else success = setPosition(1, row);                                          //else, the line is written from the start, as usual
         int i=0;
         if(len==-1){
             while(text[i]!='\n' && text[i]!='\0'){
-            if(!send8bits(*(text+i), Rs)) not_error = false;
+            if(!send8bits(*(text+i), Rs)) success = false;
             i++;
             }
         }
         else{
             if(len<0) len=0;
             for(i=0; i<len ; i++){
-                if(!send8bits(*(text+i), Rs)) not_error = false;
+                if(!send8bits(*(text+i), Rs)) success = false;
             }
         }
-        return not_error;
+        return success;
     }
     
     bool Lcd2004::displayOn(){
@@ -204,28 +219,28 @@ namespace miosix{
     {
         unsigned char first4bits = data & 0xf0;
         unsigned char last4bits = (data<<4) & 0xf0;
-        bool not_error = true;
-        if(!send4bits(first4bits|mode)) not_error = false;
-        if(!send4bits(last4bits|mode)) not_error = false;
-        return not_error;
+        bool success = true;
+        if(!send4bits(first4bits|mode)) success = false;
+        if(!send4bits(last4bits|mode)) success = false;
+        return success;
     }
     
     bool Lcd2004::send4bits(unsigned char data)
     {
-        bool not_error = true;
-        if(!send(data)) not_error = false;
-        if(!sendEnable(data)) not_error = false;
-        return not_error;
+        bool success = true;
+        if(!send(data)) success = false;
+        if(!sendEnable(data)) success = false;
+        return success;
     }
     
     bool Lcd2004::sendEnable(unsigned char data)
     {
-        bool not_error = true;
-        if(!send(data | En)) not_error = false;
+        bool success = true;
+        if(!send(data | En)) success = false;
         delayUs(1);
-        if(!send(data & ~En)) not_error = false;
+        if(!send(data & ~En)) success = false;
         delayUs(50);
-        return not_error;
+        return success;
     }
     
     bool Lcd2004::send(unsigned char value)

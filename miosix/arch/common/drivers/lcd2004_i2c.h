@@ -1,15 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***************************************************************************
+ *   Copyright (C) 2020 by Emanuele Pisano                                 *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   As a special exception, if other files instantiate templates or use   *
+ *   macros or inline functions from this file, or you compile this file   *
+ *   and link it with other works to produce a work based on this file,    *
+ *   this file does not by itself cause the resulting work to be covered   *
+ *   by the GNU General Public License. However the source code for this   *
+ *   file must still be made available in accordance with the GNU General  *
+ *   Public License. This exception does not invalidate any other reasons  *
+ *   why a work based on this file might be covered by the GNU General     *
+ *   Public License.                                                       *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>   *
+ ***************************************************************************/
 
-/* 
- * File:   lcd2004_i2c.h
- * Author: bob
- *
- * Created on 26 febbraio 2020, 20.54
- */
 
 #ifndef LCD2004_I2C_H
 #define LCD2004_I2C_H
@@ -73,9 +88,15 @@ namespace miosix{
     public:
         
         /**
-         * Constructor. Requires two GpioPin objects already created by the caller. Please refer to the board manual to retrieve the correct list of pins that provide I2C function
-         * @param scl the gpio pin that will work as Serial Clock for the I2C protocol. Refer to the board manual to retrieve a correct pin that can provide this function
-         * @param sda the gpio pin that will work as Serial Data for the I2C protocol. Refer to the board manual to retrieve a correct pin that can provide this function
+         * Constructor. Requires two GpioPin objects already created by the caller. 
+         * Refer to the board manual to retrieve the correct list of pins that 
+         * provide I2C function
+         * @param scl the gpio pin that will work as Serial Clock for the I2C 
+         *  protocol. Refer to the board manual to retrieve a correct pin that 
+         *  can provide this function
+         * @param sda the gpio pin that will work as Serial Data for the I2C 
+         *  protocol. Refer to the board manual to retrieve a correct pin that 
+         *  can provide this function
          * @param address device address. Refer to the display manual to retrieve this.
          * @param columns   number of columns of the display
          * @param rows number of rows of the display
@@ -113,8 +134,10 @@ namespace miosix{
         /**
          * Write a line
          * @param text text to write
-         * @param row the number of the row to write in, from 1 to 4. If out of bounds, it will be set to the closest bound
-         * @param len the number of character to write. If not specified, it will be considered the length of the string
+         * @param row the number of the row to write in, from 1 to 4. If out of 
+         * bounds, it will be set to the closest bound
+         * @param len the number of character to write. If not specified, it will 
+         *        be considered the length of the string
          * @return true on success, false on failure
          */
         bool writeLine(const char* text, int row, int len=-1);
@@ -168,15 +191,19 @@ namespace miosix{
         bool blinkOff();
         
         /**
-         * Scroll the display right. Please note that row addresses may not be ordered like the rows, 
-         * so a character at the end of a line could shift in a row different from the following one.
+         * Scroll the display right. 
+         * Keep note that row addresses may not be ordered like the rows, 
+         * so a character at the end of a line could shift in a row different 
+         * from the following one.
          * @return true on success, false on failure
          */
         bool scrollRight();
         
         /**
-         * Scroll the display left. Please note that row addresses may not be ordered like the rows, 
-         * so a character at the start of a line could shift in a row different from the previous one.
+         * Scroll the display left. 
+         * Keep note that row addresses may not be ordered like the rows, 
+         * so a character at the start of a line could shift in a row different 
+         * from the previous one.
          * @return true on success, false on failure
          */
         bool scrollLeft();
@@ -194,13 +221,17 @@ namespace miosix{
         bool entryLeft();
        
         /**
-         * Align the text right from the cursor
+         * Align all the text on the display right from the cursor.
+         * This command shifts all the rows, so text already written will
+         * shift accordingly 
          * @return true on success, false on failure
          */
         bool alignRight();
         
         /**
-         * Align the text left from the cursor
+         * Align all the text left from the cursor.
+         * This command shifts all the rows, so text already written will
+         * shift accordingly
          * @return true on success, false on failure
          */
         bool alignLeft();

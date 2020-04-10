@@ -11,13 +11,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/bob/miosix-kernel/miosix/util/lcd44780.cpp</file>
             <file>file:/home/bob/miosix-kernel/miosix/arch/common/drivers/lcd2004_i2c.h</file>
             <file>file:/home/bob/miosix-kernel/miosix/arch/common/drivers/lcd2004_i2c.cpp</file>
             <file>file:/home/bob/miosix-kernel/miosix/arch/cortexM4_stm32f4/common/interfaces-impl/gpio_impl.h</file>
             <file>file:/home/bob/miosix-kernel/miosix/arch/common/drivers/stm32f2_f4_i2c.h</file>
             <file>file:/home/bob/miosix-kernel/main.cpp</file>
-            <file>file:/home/bob/miosix-kernel/miosix/util/lcd44780.h</file>
+            <file>file:/home/bob/miosix-kernel/miosix/interfaces/gpio.h</file>
             <file>file:/home/bob/miosix-kernel/miosix/arch/common/drivers/stm32f2_f4_i2c.cpp</file>
         </group>
     </open-files>

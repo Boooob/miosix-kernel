@@ -1,5 +1,3 @@
-
-#include <cstdio>
 #include "miosix.h"
 #include "miosix/arch/common/drivers/lcd2004_i2c.h"
 #include "miosix/interfaces/gpio.h"
@@ -16,9 +14,9 @@ int main()
     
     lcd.writeLine("AOS Project 2020", 1);
     lcd.writeLine("Miosix OS LCD driver", 2);
-	lcd.writeLine("Emanuele Pisano", 3);
-	lcd.writeLine("Federico Terraneo", 4);
-
+    lcd.writeLine("Emanuele Pisano", 3);
+    lcd.writeLine("Federico Terraneo", 4);
+    
     for(;;)
     {
         ledOn();
